@@ -261,9 +261,13 @@ int main()
     privilege(L"SeLoadDriverPrivilege");
     privilege(L"SeDebugPrivilege");
 
-    log("Surucu yukleniyor...");
-    if (!install()) { teardown(); system("pause"); return 1; }
-    if (!connect())  { teardown(); system("pause"); return 1; }
+    /* Once mevcut/manuel map'li surucuye baglan (kdmapper once yuklediyse
+       install() gerekmez); baglanilamazsa servis kurmayi dene. */
+    if (!connect()) {
+        log("Surucu yukleniyor...");
+        if (!install()) { teardown(); system("pause"); return 1; }
+        if (!connect()) { teardown(); system("pause"); return 1; }
+    }
 
     log("Zula bekleniyor...");
     DWORD pid = 0;

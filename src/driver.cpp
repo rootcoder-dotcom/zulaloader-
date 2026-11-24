@@ -90,21 +90,27 @@ static PVOID mod_base(PEPROCESS proc, const WCHAR* name)
     KAPC_STATE apc;
     PVOID base = NULL;
     KeStackAttachProcess(proc, &apc);
-    __try {
-        MY_PEB* peb = (MY_PEB*)PsGetProcessPeb(proc);
-        if (peb && peb->Ldr) {
-            MY_PEB_LDR* ldr = (MY_PEB_LDR*)peb->Ldr;
+
+    /* __try YOK: kdmapper ile pool'a map edilmis image'in .pdata'si
+       inverted function table'de kayitli degildir, exception dispatch
+       edilemez -> bugcheck. Bunun yerine MmIsAddressValid ile acik kontrol. */
+    MY_PEB* peb = (MY_PEB*)PsGetProcessPeb(proc);
+    if (peb && MmIsAddressValid(peb)) {
+        MY_PEB_LDR* ldr = (MY_PEB_LDR*)peb->Ldr;
+        if (ldr && MmIsAddressValid(ldr)) {
+            PLIST_ENTRY head = &ldr->InLoadOrderModuleList;
             for (PLIST_ENTRY e = ldr->InLoadOrderModuleList.Flink;
-                 e != &ldr->InLoadOrderModuleList; e = e->Flink) {
+                 e && e != head && MmIsAddressValid(e); e = e->Flink) {
                 MY_LDR_ENTRY* ent = CONTAINING_RECORD(e, MY_LDR_ENTRY, InLoadOrderLinks);
-                if (ent->BaseDllName.Buffer && weq(ent->BaseDllName.Buffer, name)) {
+                if (!MmIsAddressValid(ent)) break;
+                if (ent->BaseDllName.Buffer && MmIsAddressValid(ent->BaseDllName.Buffer) &&
+                    weq(ent->BaseDllName.Buffer, name)) {
                     base = ent->DllBase;
                     break;
                 }
             }
         }
     }
-    __except (EXCEPTION_EXECUTE_HANDLER) { base = NULL; }
     KeUnstackDetachProcess(&apc);
     return base;
 }
@@ -263,11 +269,14 @@ static NTSTATUS map_dll(ZULA_MANUAL_MAP* m)
     if (!kbuf) { ObDereferenceObject(proc); return STATUS_INSUFFICIENT_RESOURCES; }
 
     st = STATUS_SUCCESS;
-    __try {
-        ProbeForRead((PVOID)m->DataVa, (SIZE_T)m->DataSize, 1);
+    /* __try YOK (kdmapper: exception dispatch edilemez) - acik kontrol */
+    if (!m->DataVa || !m->DataSize || m->DataSize > 0x10000000 ||
+        !MmIsAddressValid((PVOID)m->DataVa) ||
+        !MmIsAddressValid((PVOID)((PUCHAR)m->DataVa + m->DataSize - 1))) {
+        st = STATUS_ACCESS_VIOLATION;
+    } else {
         RtlCopyMemory(kbuf, (PVOID)m->DataVa, (SIZE_T)m->DataSize);
     }
-    __except (EXCEPTION_EXECUTE_HANDLER) { st = GetExceptionCode(); }
     if (!NT_SUCCESS(st)) goto out;
 
     nt = RtlImageNtHeader(kbuf);
@@ -280,9 +289,12 @@ static NTSTATUS map_dll(ZULA_MANUAL_MAP* m)
     st = do_alloc(proc, size, PAGE_EXECUTE_READWRITE, (PULONGLONG)&base);
     if (!NT_SUCCESS(st)) goto out;
 
-    /* hedef process baglaminda kopya + relocate + import + TLS */
+    /* hedef process baglaminda kopya + relocate + import + TLS
+       __try YOK (kdmapper: exception dispatch edilemez) - adreslerin
+       tamami gecerli: kbuf NonPagedPool, base ZwAllocateVirtualMemory,
+       nt kbuf uzerinde. */
     KeStackAttachProcess(proc, &apc);
-    __try {
+    {
         RtlCopyMemory(base, kbuf, nt->OptionalHeader.SizeOfHeaders);
         sec = IMAGE_FIRST_SECTION(nt);
         nsec = nt->FileHeader.NumberOfSections;
@@ -357,7 +369,6 @@ static NTSTATUS map_dll(ZULA_MANUAL_MAP* m)
             }
         }
     }
-    __except (EXCEPTION_EXECUTE_HANDLER) { st = GetExceptionCode(); }
     KeUnstackDetachProcess(&apc);
     if (!NT_SUCCESS(st)) goto out;
 
@@ -542,6 +553,14 @@ static VOID unload(PDRIVER_OBJECT drv)
     UNREFERENCED_PARAMETER(drv);
 }
 
+/* kdmapper manuel map: DriverEntry NULL DriverObject ile cagrilir
+   (kdmapper README: "DriverObject and RegistryPath are NULL"). IoCreateDevice
+   ve dispatch kurulumu ayni kalsin diye driver image'i icinde (pool'da,
+   kalici) sahte bir DRIVER_OBJECT kullanilir - IoCreateDevice yalnizca
+   DriverObject->DeviceObject listesine yazar, ek alan gerekmez. */
+static DRIVER_OBJECT g_fakeDrv;
+static DRIVER_EXTENSION g_fakeExt;
+
 NTSTATUS DriverEntry(PDRIVER_OBJECT drv, PUNICODE_STRING reg)
 {
     UNICODE_STRING dev, link;
@@ -549,6 +568,14 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT drv, PUNICODE_STRING reg)
     ULONG i;
 
     UNREFERENCED_PARAMETER(reg);
+
+    if (!drv) {
+        RtlZeroMemory(&g_fakeDrv, sizeof(g_fakeDrv));
+        RtlZeroMemory(&g_fakeExt, sizeof(g_fakeExt));
+        g_fakeExt.DriverObject = &g_fakeDrv;
+        g_fakeDrv.DriverExtension = &g_fakeExt;
+        drv = &g_fakeDrv;
+    }
 
     g_drv = (DRV*)ExAllocatePoolWithTag(NonPagedPool, sizeof(DRV), TAG);
     if (!g_drv) return STATUS_INSUFFICIENT_RESOURCES;

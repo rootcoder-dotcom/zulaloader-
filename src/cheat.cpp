@@ -63,8 +63,10 @@ using t_nstr = void* (*)(void*);
 static t_dg p_dg = nullptr;
 static t_asm p_asm = nullptr;
 static t_aimg p_aimg = nullptr;
-static t_imgCnt p_imgCnt = nullptr;
-static t_imgAt p_imgAt = nullptr;
+/* sinif sayaci ve sinif erisimi her ikisi de IMAGE uzerindedir:
+   il2cpp_image_get_class_count(image) / il2cpp_image_get_class(image, i)
+   (il2cpp_class_get_class_count diye bir export YOKTUR - daha once yanlis
+   isme baglandigi icin p_clsCnt hep nullptr kaliyordu) */
 static t_clsCnt p_clsCnt = nullptr;
 static t_clsAt p_clsAt = nullptr;
 static t_clsImg p_clsImg = nullptr;
@@ -165,9 +167,7 @@ static bool il2_init()
     p_dg     = (t_dg)GetProcAddress(g_ga, "il2cpp_domain_get");
     p_asm   = (t_asm)GetProcAddress(g_ga, "il2cpp_domain_get_assemblies");
     p_aimg  = (t_aimg)GetProcAddress(g_ga, "il2cpp_assembly_get_image");
-    p_imgCnt= (t_imgCnt)GetProcAddress(g_ga, "il2cpp_image_get_class_count");
-    p_imgAt = (t_imgAt)GetProcAddress(g_ga, "il2cpp_image_get_class");
-    p_clsCnt= (t_clsCnt)GetProcAddress(g_ga, "il2cpp_class_get_class_count");
+    p_clsCnt= (t_clsCnt)GetProcAddress(g_ga, "il2cpp_image_get_class_count");
     p_clsAt = (t_clsAt)GetProcAddress(g_ga, "il2cpp_image_get_class");
     p_clsImg= (t_clsImg)GetProcAddress(g_ga, "il2cpp_class_get_image");
     p_tname = (t_tname)GetProcAddress(g_ga, "il2cpp_class_get_name");
@@ -276,20 +276,46 @@ static void tick();
 static void cfg_load();
 static void cfg_save();
 
+/* README ile ayni yol: C:\zula\cheat.ini (metin, key=value)
+   Daha once goreli "zula.cfg" + binary dump idi - README ile uyusmuyordu. */
+static const char* CFG_PATH = "C:\\zula\\cheat.ini";
+
 static void cfg_save()
 {
-    std::ofstream f("zula.cfg", std::ios::binary | std::ios::trunc);
+    std::ofstream f(CFG_PATH, std::ios::trunc);
     if (!f) return;
-    f.write((const char*)&cfg, sizeof(cfg));
+    f << "esp="      << (cfg.esp      ? 1 : 0) << "\n"
+      << "teamOnly=" << (cfg.teamOnly ? 1 : 0) << "\n"
+      << "aim="      << (cfg.aim      ? 1 : 0) << "\n"
+      << "noRecoil=" << (cfg.noRecoil ? 1 : 0) << "\n"
+      << "ammo="     << (cfg.ammo     ? 1 : 0) << "\n"
+      << "speed="    << (cfg.speed    ? 1 : 0) << "\n"
+      << "key="      << cfg.key      << "\n"
+      << "fov="      << cfg.fov      << "\n"
+      << "speedVal=" << cfg.speedVal << "\n";
 }
 
 static void cfg_load()
 {
-    std::ifstream f("zula.cfg", std::ios::binary);
+    std::ifstream f(CFG_PATH);
     if (!f) return;
-    Cfg tmp{};
-    f.read((char*)&tmp, sizeof(tmp));
-    if (f) cfg = tmp;
+    std::string line;
+    while (std::getline(f, line)) {
+        size_t eq = line.find('=');
+        if (eq == std::string::npos) continue;
+        std::string k = line.substr(0, eq);
+        std::string v = line.substr(eq + 1);
+        std::istringstream is(v);
+        if      (k == "esp")      { int t = 0; is >> t; cfg.esp = (t != 0); }
+        else if (k == "teamOnly") { int t = 0; is >> t; cfg.teamOnly = (t != 0); }
+        else if (k == "aim")      { int t = 0; is >> t; cfg.aim = (t != 0); }
+        else if (k == "noRecoil") { int t = 0; is >> t; cfg.noRecoil = (t != 0); }
+        else if (k == "ammo")     { int t = 0; is >> t; cfg.ammo = (t != 0); }
+        else if (k == "speed")    { int t = 0; is >> t; cfg.speed = (t != 0); }
+        else if (k == "key")      { is >> cfg.key; }
+        else if (k == "fov")      { is >> cfg.fov; }
+        else if (k == "speedVal") { is >> cfg.speedVal; }
+    }
 }
 
 static void resolve()

@@ -1,0 +1,30 @@
+# ===== derleme ara dosyalari (ikili ciktilar commit edilir) =====
+*.obj
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.idb
+*.iobj
+*.ipdb
+
+# ===== log / gecici ciktilar =====
+*_log.txt
+loader_verify*.txt
+deploy_elev_out.txt
+deploy_elev_err.txt
+
+# ===== artik dosyalar =====
+/qc
+/query
+/RUNNING
+
+# ===== kokteki eski surucu kaynagi (gunceli src/driver.cpp) =====
+/driver.cpp
+
+# ===== editor / sistem =====
+.vs/
+*.user
+*.suo
+Thumbs.db
+Desktop.ini

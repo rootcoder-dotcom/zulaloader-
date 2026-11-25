@@ -9,6 +9,9 @@
 #define ZULA_DEVICE_NAME     L"\\Device\\zuladrv"
 #define ZULA_SYMLINK_NAME    L"\\DosDevices\\zuladrv"
 #define ZULA_WIN32_NAME      "\\\\.\\zuladrv"
+/* kdmapper manuel map'te symlink yalnizca elevation baglaminda gorunuyor;
+   cihaz nesnesine GLOBALROOT uzerinden her baglamdan ulasilabilir */
+#define ZULA_GLOBAL_NAME     "\\\\.\\GLOBALROOT\\Device\\zuladrv"
 #define ZULA_SERVICE_NAME    L"zuladrv"
 #define ZULA_TARGET          "Zula.exe"
 #define ZULA_DLL_PATH        "C:\\zula\\cheat.dll"

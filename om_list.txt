@@ -1,0 +1,22 @@
+﻿===== \Device
+   toplam: 410
+   zula eslesmesi YOK
+   ornek: 0000007e  [Device]
+   ornek: 0000006a  [Device]
+   ornek: 00000058  [Device]
+   ornek: NetBT_Tcpip_{9814198D-8212-4FC3-B68D-556DC20C84E3}  [Device]
+   ornek: GPIO_1  [Device]
+   ornek: NDMP2  [Device]
+   ornek: NTPNP_PCI0030  [Device]
+   ornek: 00000044  [Device]
+   ornek: NTPNP_PCI0002  [Device]
+   ornek: 00000030  [Device]
+===== \??
+   toplam: 1
+   zula eslesmesi YOK
+===== \Sessions\1\DosDevices
+   toplam: 0
+   zula eslesmesi YOK
+===== \Sessions\0\DosDevices
+   toplam: 1
+   zula eslesmesi YOK

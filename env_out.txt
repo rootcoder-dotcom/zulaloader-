@@ -1,0 +1,17 @@
+=== ELEVATED ORTAM ===
+session=1
+admin=True
+QD zuladrv -> \Device\zuladrv
+QD C: -> \Device\HarddiskVolume3
+QD NUL -> \Device\Null
+LISTE toplam=329
+LISTE HIT zuladrv
+LISTE ilk10=zuladrv,Global,DISPLAY5,HID#VID_1532&PID_02A1&MI_03&Col01#b&15747ce2&0&0000#{4d1e55b2-f16f-11cf-88cb-001111000030},USB#VID_046D&PID_094C&MI_00#9&2c9aed12&0&0000#{e5323777-f976-4f5b-9b55-b94699c46e44},USB#VID_0DB0&PID_0076#7E8925050801#{a5dcbf10-6530-11d2-901f-00c04fb951ed},PhysicalDrive0,VDRVROOT,PCI#VEN_1022&DEV_14DB&SUBSYS_7E891462&REV_00#3&11583659&0&11#{dbe4373d-3c81-40cb-ace4-e0e5d05f0c9f},SWD#MMDEVAPI#{0.0.0.00000000}.{6c620393-f72e-4906-89d5-d6f6dc45f53d}#{e6327cad-dcec-4949-ae8a-991e976a79d2}
+=== ELEVATED CIHAZ KONTROL ===
+--- kontrol 12:28:26
+SYMLINK VAR -> \Device\zuladrv
+CIHAZ ACILAMADI: Dosya olmayan bir cihazçn FileStream tarafçndan aáçlmasç istendi. 'com1:' veya 'lpt1:' gibi cihazlar iáin destek amacçyla, CreateFile îßesini áaßçrçn, sonra bir iületim sistemi iüleyicisini IntPtr olarak alan FileStream oluüturucularçnç kullançn.
+\\Device: HIT zuladrv
+\\Device: toplam=410
+\\??: HIT zuladrv
+\\??: toplam=2

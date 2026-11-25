@@ -1,0 +1,395 @@
+
+************* Preparing the environment for Debugger Extensions Gallery repositories **************
+   ExtensionRepository : Implicit
+   UseExperimentalFeatureForNugetShare : true
+   AllowNugetExeUpdate : true
+   NonInteractiveNuget : true
+   AllowNugetMSCredentialProviderInstall : true
+   AllowParallelInitializationOfLocalRepositories : true
+   EnableRedirectToChakraJsProvider : false
+
+   -- Configuring repositories
+      ----> Repository : LocalInstalled, Enabled: true
+      ----> Repository : UserExtensions, Enabled: true
+
+>>>>>>>>>>>>> Preparing the environment for Debugger Extensions Gallery repositories completed, duration 0.000 seconds
+
+************* Waiting for Debugger Extensions Gallery to Initialize **************
+
+>>>>>>>>>>>>> Waiting for Debugger Extensions Gallery to Initialize completed, duration 0.016 seconds
+   ----> Repository : UserExtensions, Enabled: true, Packages count: 0
+   ----> Repository : LocalInstalled, Enabled: true, Packages count: 30
+
+Microsoft (R) Windows Debugger Version 10.0.28000.2526 AMD64
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+
+Loading Dump File [C:\WINDOWS\Minidump\112526-9968-01.dmp]
+Mini Kernel Dump File: Only registers and stack trace are available
+
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+Symbol search path is: srv*
+Executable search path is: 
+Windows 10 Kernel Version 26100 MP (16 procs) Free x64
+Product: WinNt, suite: TerminalServer SingleUserTS
+Kernel base = 0xfffff806`9a000000 PsLoadedModuleList = 0xfffff806`9aef56a0
+Debug session time: Wed Nov 25 01:05:11.358 2026 (UTC + 3:00)
+System Uptime: 0 days 0:02:33.056
+Loading Kernel Symbols
+...............................................................
+................................................................
+................................................................
+..................Missing image name, possible paged-out or corrupt data.
+.
+Loading User Symbols
+PEB is paged out (Peb.Ldr = 00000093`9a3cc018).  Type ".hh dbgerr001" for details
+Loading unloaded module list
+.............
+For analysis of this file, run !analyze -v
+6: kd> cdb: Reading initial command '!analyze -v; qd'
+Loading Kernel Symbols
+...............................................................
+................................................................
+................................................................
+..................Missing image name, possible paged-out or corrupt data.
+.
+Loading User Symbols
+PEB is paged out (Peb.Ldr = 00000093`9a3cc018).  Type ".hh dbgerr001" for details
+Loading unloaded module list
+.............
+*******************************************************************************
+*                                                                             *
+*                        Bugcheck Analysis                                    *
+*                                                                             *
+*******************************************************************************
+
+REFERENCE_BY_POINTER (18)
+Arguments:
+Arg1: 0000000000000000, Object type of the object whose reference count is being lowered
+Arg2: ffff910e150b7020, Object whose reference count is being lowered
+Arg3: 0000000000000010, Reserved
+Arg4: 0000000000000001, Reserved
+	The reference count of an object is illegal for the current state of the object.
+	Each time a driver uses a pointer to an object the driver calls a kernel routine
+	to increment the reference count of the object. When the driver is done with the
+	pointer the driver calls another kernel routine to decrement the reference count.
+	Drivers must match calls to the increment and decrement routines. This BugCheck
+	can occur because an object's reference count goes to zero while there are still
+	open handles to the object, in which case the fourth parameter indicates the number
+	of opened handles. It may also occur when the object's reference count drops below zero
+	whether or not there are open handles to the object, and in that case the fourth parameter
+	contains the actual value of the pointer references count.
+
+Debugging Details:
+------------------
+
+
+KEY_VALUES_STRING: 1
+
+    Key  : Analysis.CPU.mSec
+    Value: 1109
+
+    Key  : Analysis.Elapsed.mSec
+    Value: 1610
+
+    Key  : Analysis.IO.Other.Mb
+    Value: 13
+
+    Key  : Analysis.IO.Read.Mb
+    Value: 1
+
+    Key  : Analysis.IO.Write.Mb
+    Value: 23
+
+    Key  : Analysis.Init.CPU.mSec
+    Value: 390
+
+    Key  : Analysis.Init.Elapsed.mSec
+    Value: 11130
+
+    Key  : Analysis.Memory.CommitPeak.Mb
+    Value: 79
+
+    Key  : Analysis.Version.DbgEng
+    Value: 10.0.28000.2526
+
+    Key  : Analysis.Version.Description
+    Value: 10.2506.23.01 amd64fre
+
+    Key  : Analysis.Version.Ext
+    Value: 1.2506.23.1
+
+    Key  : Bugcheck.Code.LegacyAPI
+    Value: 0x18
+
+    Key  : Bugcheck.Code.TargetModel
+    Value: 0x18
+
+    Key  : Dump.Attributes.AsUlong
+    Value: 0x21808
+
+    Key  : Dump.Attributes.DiagDataWrittenToHeader
+    Value: 1
+
+    Key  : Dump.Attributes.ErrorCode
+    Value: 0x0
+
+    Key  : Dump.Attributes.KernelGeneratedTriageDump
+    Value: 1
+
+    Key  : Dump.Attributes.LastLine
+    Value: Dump completed successfully.
+
+    Key  : Dump.Attributes.ProgressPercentage
+    Value: 0
+
+    Key  : Failure.Bucket
+    Value: 0x18_nt!ObfReferenceObjectWithTag
+
+    Key  : Failure.Hash
+    Value: {b6b47bfd-ed1b-fc56-3b01-ddc037f9c59f}
+
+    Key  : Hypervisor.Enlightenments.ValueHex
+    Value: 0x7497cf94
+
+    Key  : Hypervisor.Flags.AnyHypervisorPresent
+    Value: 1
+
+    Key  : Hypervisor.Flags.ApicEnlightened
+    Value: 1
+
+    Key  : Hypervisor.Flags.ApicVirtualizationAvailable
+    Value: 0
+
+    Key  : Hypervisor.Flags.AsyncMemoryHint
+    Value: 0
+
+    Key  : Hypervisor.Flags.CoreSchedulerRequested
+    Value: 0
+
+    Key  : Hypervisor.Flags.CpuManager
+    Value: 1
+
+    Key  : Hypervisor.Flags.DeprecateAutoEoi
+    Value: 0
+
+    Key  : Hypervisor.Flags.DynamicCpuDisabled
+    Value: 1
+
+    Key  : Hypervisor.Flags.Epf
+    Value: 0
+
+    Key  : Hypervisor.Flags.ExtendedProcessorMasks
+    Value: 1
+
+    Key  : Hypervisor.Flags.HardwareMbecAvailable
+    Value: 1
+
+    Key  : Hypervisor.Flags.MaxBankNumber
+    Value: 0
+
+    Key  : Hypervisor.Flags.MemoryZeroingControl
+    Value: 0
+
+    Key  : Hypervisor.Flags.NoExtendedRangeFlush
+    Value: 0
+
+    Key  : Hypervisor.Flags.NoNonArchCoreSharing
+    Value: 1
+
+    Key  : Hypervisor.Flags.Phase0InitDone
+    Value: 1
+
+    Key  : Hypervisor.Flags.PowerSchedulerQos
+    Value: 0
+
+    Key  : Hypervisor.Flags.RootScheduler
+    Value: 0
+
+    Key  : Hypervisor.Flags.SynicAvailable
+    Value: 1
+
+    Key  : Hypervisor.Flags.UseQpcBias
+    Value: 0
+
+    Key  : Hypervisor.Flags.Value
+    Value: 38408431
+
+    Key  : Hypervisor.Flags.ValueHex
+    Value: 0x24a10ef
+
+    Key  : Hypervisor.Flags.VpAssistPage
+    Value: 1
+
+    Key  : Hypervisor.Flags.VsmAvailable
+    Value: 1
+
+    Key  : Hypervisor.RootFlags.AccessStats
+    Value: 1
+
+    Key  : Hypervisor.RootFlags.CrashdumpEnlightened
+    Value: 1
+
+    Key  : Hypervisor.RootFlags.CreateVirtualProcessor
+    Value: 1
+
+    Key  : Hypervisor.RootFlags.DisableHyperthreading
+    Value: 0
+
+    Key  : Hypervisor.RootFlags.HostTimelineSync
+    Value: 1
+
+    Key  : Hypervisor.RootFlags.HypervisorDebuggingEnabled
+    Value: 0
+
+    Key  : Hypervisor.RootFlags.IsHyperV
+    Value: 1
+
+    Key  : Hypervisor.RootFlags.LivedumpEnlightened
+    Value: 1
+
+    Key  : Hypervisor.RootFlags.MapDeviceInterrupt
+    Value: 1
+
+    Key  : Hypervisor.RootFlags.MceEnlightened
+    Value: 1
+
+    Key  : Hypervisor.RootFlags.Nested
+    Value: 0
+
+    Key  : Hypervisor.RootFlags.StartLogicalProcessor
+    Value: 1
+
+    Key  : Hypervisor.RootFlags.Value
+    Value: 1015
+
+    Key  : Hypervisor.RootFlags.ValueHex
+    Value: 0x3f7
+
+    Key  : WER.System.BIOSRevision
+    Value: 5.41.0.0
+
+
+BUGCHECK_CODE:  18
+
+BUGCHECK_P1: 0
+
+BUGCHECK_P2: ffff910e150b7020
+
+BUGCHECK_P3: 10
+
+BUGCHECK_P4: 1
+
+FILE_IN_CAB:  112526-9968-01.dmp
+
+DUMP_FILE_ATTRIBUTES: 0x21808
+  Kernel Generated Triage Dump
+
+FAULTING_THREAD:  ffff910e28a7f080
+
+BLACKBOXBSD: 1 (!blackboxbsd)
+
+
+BLACKBOXNTFS: 1 (!blackboxntfs)
+
+
+BLACKBOXPNP: 1 (!blackboxpnp)
+
+
+BLACKBOXWINLOGON: 1 (!blackboxwinlogon)
+
+
+CUSTOMER_CRASH_COUNT:  1
+
+PROCESS_NAME:  kdmapper.exe
+
+STACK_TEXT:  
+fffffc08`1334f208 fffff806`9a2f6430     : 00000000`00000018 00000000`00000000 ffff910e`150b7020 00000000`00000010 : nt!KeBugCheckEx
+fffffc08`1334f210 fffff806`9a2f56ee     : 00000000`00000000 fffffc08`1334f430 ffff910e`15003ae0 00000000`00000022 : nt!ObfReferenceObjectWithTag+0x60
+fffffc08`1334f250 fffff806`9a9bb60d     : 00000000`000001c0 00000000`00000000 fffffc08`1334f430 fffffc08`1334f430 : nt!ObfReferenceObject+0xe
+fffffc08`1334f280 ffff910e`150b4537     : ffff910e`150b7020 fffff806`9a9448cd fffffc08`1334f408 00000000`00000000 : nt!IoCreateDevice+0x34d
+fffffc08`1334f3f0 ffff910e`150b7020     : fffff806`9a9448cd fffffc08`1334f408 00000000`00000000 00000093`00000100 : 0xffff910e`150b4537
+fffffc08`1334f3f8 fffff806`9a9448cd     : fffffc08`1334f408 00000000`00000000 00000093`00000100 00007ff7`80862000 : 0xffff910e`150b7020
+fffffc08`1334f400 fffff806`9a6cf528     : 00000000`00000000 fffffc08`1334f4e0 00000000`5b3d8333 00000095`b0eb3fac : nt!NtFreeVirtualMemory+0x8d
+fffffc08`1334f460 00007ff8`a0156cc4     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : nt!KiSystemServiceCopyEnd+0x28
+00000093`9a1ff898 00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : 0x00007ff8`a0156cc4
+
+
+SYMBOL_NAME:  nt!ObfReferenceObjectWithTag+60
+
+MODULE_NAME: nt
+
+IMAGE_NAME:  ntkrnlmp.exe
+
+IMAGE_VERSION:  10.0.26100.9974
+
+STACK_COMMAND: .process /r /p 0xffff910e28a49080; .thread 0xffff910e28a7f080 ; kb
+
+BUCKET_ID_FUNC_OFFSET:  60
+
+FAILURE_BUCKET_ID:  0x18_nt!ObfReferenceObjectWithTag
+
+OSPLATFORM_TYPE:  x64
+
+OSNAME:  Windows 10
+
+FAILURE_ID_HASH:  {b6b47bfd-ed1b-fc56-3b01-ddc037f9c59f}
+
+Followup:     MachineOwner
+---------
+
+quit:
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\atlmfc.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\concurrency.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\cpp_rest.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Kernel.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\ObjectiveC.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\stl.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Usb4Kd.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Data.Json.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Geolocation.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Sensors.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Media.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\windows.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\winrt.natvis'

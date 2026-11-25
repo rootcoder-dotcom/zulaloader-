@@ -269,13 +269,20 @@ static NTSTATUS map_dll(ZULA_MANUAL_MAP* m)
     if (!kbuf) { ObDereferenceObject(proc); return STATUS_INSUFFICIENT_RESOURCES; }
 
     st = STATUS_SUCCESS;
-    /* __try YOK (kdmapper: exception dispatch edilemez) - acik kontrol */
-    if (!m->DataVa || !m->DataSize || m->DataSize > 0x10000000 ||
-        !MmIsAddressValid((PVOID)m->DataVa) ||
-        !MmIsAddressValid((PVOID)((PUCHAR)m->DataVa + m->DataSize - 1))) {
-        st = STATUS_ACCESS_VIOLATION;
+    /* __try YOK (kdmapper: exception dispatch edilemez).
+       DataVa HEDEF process'in (Zula) adres uzayinda; MmIsAddressValid ise
+       mevcut baglama bakar -> loader baglaminda hep FALSE verip
+       STATUS_ACCESS_VIOLATION (Win32 998) donduruyordu. Kopya kaynagi
+       hedef baglamindan MmCopyVirtualMemory ile alinir. */
+    if (!m->DataVa || !m->DataSize || m->DataSize > 0x10000000) {
+        st = STATUS_INVALID_PARAMETER;
     } else {
-        RtlCopyMemory(kbuf, (PVOID)m->DataVa, (SIZE_T)m->DataSize);
+        SIZE_T done = 0;
+        st = MmCopyVirtualMemory(proc, (PVOID)m->DataVa,
+                                 PsGetCurrentProcess(), kbuf,
+                                 (SIZE_T)m->DataSize, KernelMode, &done);
+        if (NT_SUCCESS(st) && done != (SIZE_T)m->DataSize)
+            st = STATUS_PARTIAL_COPY;
     }
     if (!NT_SUCCESS(st)) goto out;
 
@@ -554,11 +561,38 @@ static VOID unload(PDRIVER_OBJECT drv)
 }
 
 /* kdmapper manuel map: DriverEntry NULL DriverObject ile cagrilir
-   (kdmapper README: "DriverObject and RegistryPath are NULL"). IoCreateDevice
-   ve dispatch kurulumu ayni kalsin diye driver image'i icinde (pool'da,
-   kalici) sahte bir DRIVER_OBJECT kullanilir - IoCreateDevice yalnizca
-   DriverObject->DeviceObject listesine yazar, ek alan gerekmez. */
-static DRIVER_OBJECT g_fakeDrv;
+   (kdmapper README: "DriverObject and RegistryPath are NULL").
+   IoCreateDevice DriverObject'u ObReferenceObject ile referanslar; o islem
+   govdenin tam 0x30 oncesindeki OBJECT_HEADER.PointerCount uzerinde
+   "lock xadd" yapar ve eski deger <= 0 ise BSOD 0x18 verir
+   (nt!ObfReferenceObjectWithTag+0x60 -> jle KeBugCheckEx).
+   Bu yuzden sahte govdenin onune elle bir OBJECT_HEADER duzeni koyulur.
+   TypeIndex doldurulmaz: yalnizca ObGetObjectType/Security yollarinda
+   okunur, IoCreateDevice o yolu kullanmaz; InfoMask=0 ise opsiyonel
+   header (quota/security) aramasi da yapilmaz. */
+typedef struct FAKE_OBJ_HEADER {
+    LONG_PTR PointerCount;    /* +0x00  xadd hedefi, >0 olmali */
+    LONG_PTR HandleCount;     /* +0x08 */
+    void* Lock;               /* +0x10  _EX_PUSH_LOCK, 0 = acik */
+    UCHAR TypeIndex;          /* +0x18 */
+    UCHAR TraceFlags;         /* +0x19 */
+    UCHAR InfoMask;           /* +0x1a  0 = opsiyonel bilgi yok */
+    UCHAR Flags;              /* +0x1b  KernelObject = 0x02 */
+    ULONG Reserved;           /* +0x1c */
+    void* ObjectCreateInfo;   /* +0x20 */
+    void* SecurityDescriptor; /* +0x28 */
+    /* Body +0x30 -> DRIVER_OBJECT burada baslar */
+} FAKE_OBJ_HEADER;
+
+typedef struct FAKE_DRIVER {
+    FAKE_OBJ_HEADER Header;
+    DRIVER_OBJECT Driver;
+} FAKE_DRIVER;
+
+static_assert(sizeof(FAKE_OBJ_HEADER) == 0x30, "OBJECT_HEADER 0x30 olmali");
+static_assert(FIELD_OFFSET(FAKE_DRIVER, Driver) == 0x30, "govde header+0x30");
+
+static FAKE_DRIVER g_fakeDrv;
 static DRIVER_EXTENSION g_fakeExt;
 
 NTSTATUS DriverEntry(PDRIVER_OBJECT drv, PUNICODE_STRING reg)
@@ -572,9 +606,14 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT drv, PUNICODE_STRING reg)
     if (!drv) {
         RtlZeroMemory(&g_fakeDrv, sizeof(g_fakeDrv));
         RtlZeroMemory(&g_fakeExt, sizeof(g_fakeExt));
-        g_fakeExt.DriverObject = &g_fakeDrv;
-        g_fakeDrv.DriverExtension = &g_fakeExt;
-        drv = &g_fakeDrv;
+        /* ObfReferenceObject: eski PointerCount <= 0 ise bugcheck 0x18 */
+        g_fakeDrv.Header.PointerCount = 0x1000;
+        g_fakeDrv.Header.Flags = 0x02; /* KernelObject */
+        g_fakeExt.DriverObject = &g_fakeDrv.Driver;
+        g_fakeDrv.Driver.DriverExtension = &g_fakeExt;
+        g_fakeDrv.Driver.Type = 4;    /* IO_TYPE_DRIVER */
+        g_fakeDrv.Driver.Size = (CSHORT)sizeof(DRIVER_OBJECT);
+        drv = &g_fakeDrv.Driver;
     }
 
     g_drv = (DRV*)ExAllocatePoolWithTag(NonPagedPool, sizeof(DRV), TAG);

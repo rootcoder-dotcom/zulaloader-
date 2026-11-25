@@ -112,6 +112,8 @@ static bool install()
 static bool connect()
 {
     g_dev = CreateFileA(ZULA_WIN32_NAME, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+    if (g_dev == INVALID_HANDLE_VALUE)
+        g_dev = CreateFileA(ZULA_GLOBAL_NAME, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
     if (g_dev == INVALID_HANDLE_VALUE) { log("[-] Cihaz acilamadi: %lu", GetLastError()); return false; }
 
     ZULA_VERIFY v{};

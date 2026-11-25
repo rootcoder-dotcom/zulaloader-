@@ -1,0 +1,452 @@
+===== dt nt!_OBJECT_HEADER
+
+************* Preparing the environment for Debugger Extensions Gallery repositories **************
+   ExtensionRepository : Implicit
+   UseExperimentalFeatureForNugetShare : true
+   AllowNugetExeUpdate : true
+   NonInteractiveNuget : true
+   AllowNugetMSCredentialProviderInstall : true
+   AllowParallelInitializationOfLocalRepositories : true
+   EnableRedirectToChakraJsProvider : false
+
+   -- Configuring repositories
+      ----> Repository : LocalInstalled, Enabled: true
+      ----> Repository : UserExtensions, Enabled: true
+
+>>>>>>>>>>>>> Preparing the environment for Debugger Extensions Gallery repositories completed, duration 0.000 seconds
+
+************* Waiting for Debugger Extensions Gallery to Initialize **************
+
+>>>>>>>>>>>>> Waiting for Debugger Extensions Gallery to Initialize completed, duration 0.000 seconds
+   ----> Repository : UserExtensions, Enabled: true, Packages count: 0
+   ----> Repository : LocalInstalled, Enabled: true, Packages count: 30
+
+Microsoft (R) Windows Debugger Version 10.0.28000.2526 AMD64
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+
+Loading Dump File [C:\WINDOWS\Minidump\112526-9968-01.dmp]
+Mini Kernel Dump File: Only registers and stack trace are available
+
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+Symbol search path is: srv*
+Executable search path is: 
+Windows 10 Kernel Version 26100 MP (16 procs) Free x64
+Product: WinNt, suite: TerminalServer SingleUserTS
+Kernel base = 0xfffff806`9a000000 PsLoadedModuleList = 0xfffff806`9aef56a0
+Debug session time: Wed Nov 25 01:05:11.358 2026 (UTC + 3:00)
+System Uptime: 0 days 0:02:33.056
+Loading Kernel Symbols
+...............................................................
+................................................................
+................................................................
+..................Missing image name, possible paged-out or corrupt data.
+.
+Loading User Symbols
+PEB is paged out (Peb.Ldr = 00000093`9a3cc018).  Type ".hh dbgerr001" for details
+Loading unloaded module list
+.............
+For analysis of this file, run !analyze -v
+6: kd> cdb: Reading initial command 'dt nt!_OBJECT_HEADER; qd'
+   +0x000 PointerCount     : Int8B
+   +0x008 HandleCount      : Int8B
+   +0x008 NextToFree       : Ptr64 Void
+   +0x010 Lock             : _EX_PUSH_LOCK
+   +0x018 TypeIndex        : UChar
+   +0x019 TraceFlags       : UChar
+   +0x019 DbgRefTrace      : Pos 0, 1 Bit
+   +0x019 DbgTracePermanent : Pos 1, 1 Bit
+   +0x01a InfoMask         : UChar
+   +0x01b Flags            : UChar
+   +0x01b NewObject        : Pos 0, 1 Bit
+   +0x01b KernelObject     : Pos 1, 1 Bit
+   +0x01b KernelOnlyAccess : Pos 2, 1 Bit
+   +0x01b ExclusiveObject  : Pos 3, 1 Bit
+   +0x01b PermanentObject  : Pos 4, 1 Bit
+   +0x01b DefaultSecurityQuota : Pos 5, 1 Bit
+   +0x01b SingleHandleEntry : Pos 6, 1 Bit
+   +0x01b DeletedInline    : Pos 7, 1 Bit
+   +0x01c Reserved         : Uint4B
+   +0x020 ObjectCreateInfo : Ptr64 _OBJECT_CREATE_INFORMATION
+   +0x020 QuotaBlockCharged : Ptr64 Void
+   +0x028 SecurityDescriptor : Ptr64 Void
+   +0x030 Body             : _QUAD
+quit:
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\atlmfc.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\concurrency.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\cpp_rest.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Kernel.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\ObjectiveC.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\stl.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Usb4Kd.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Data.Json.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Geolocation.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Sensors.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Media.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\windows.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\winrt.natvis'
+===== u nt!ObfReferenceObjectWithTag
+
+************* Preparing the environment for Debugger Extensions Gallery repositories **************
+   ExtensionRepository : Implicit
+   UseExperimentalFeatureForNugetShare : true
+   AllowNugetExeUpdate : true
+   NonInteractiveNuget : true
+   AllowNugetMSCredentialProviderInstall : true
+   AllowParallelInitializationOfLocalRepositories : true
+   EnableRedirectToChakraJsProvider : false
+
+   -- Configuring repositories
+      ----> Repository : LocalInstalled, Enabled: true
+      ----> Repository : UserExtensions, Enabled: true
+
+>>>>>>>>>>>>> Preparing the environment for Debugger Extensions Gallery repositories completed, duration 0.000 seconds
+
+************* Waiting for Debugger Extensions Gallery to Initialize **************
+
+>>>>>>>>>>>>> Waiting for Debugger Extensions Gallery to Initialize completed, duration 0.015 seconds
+   ----> Repository : UserExtensions, Enabled: true, Packages count: 0
+   ----> Repository : LocalInstalled, Enabled: true, Packages count: 30
+
+Microsoft (R) Windows Debugger Version 10.0.28000.2526 AMD64
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+
+Loading Dump File [C:\WINDOWS\Minidump\112526-9968-01.dmp]
+Mini Kernel Dump File: Only registers and stack trace are available
+
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+Symbol search path is: srv*
+Executable search path is: 
+Windows 10 Kernel Version 26100 MP (16 procs) Free x64
+Product: WinNt, suite: TerminalServer SingleUserTS
+Kernel base = 0xfffff806`9a000000 PsLoadedModuleList = 0xfffff806`9aef56a0
+Debug session time: Wed Nov 25 01:05:11.358 2026 (UTC + 3:00)
+System Uptime: 0 days 0:02:33.056
+Loading Kernel Symbols
+...............................................................
+................................................................
+................................................................
+..................Missing image name, possible paged-out or corrupt data.
+.
+Loading User Symbols
+PEB is paged out (Peb.Ldr = 00000093`9a3cc018).  Type ".hh dbgerr001" for details
+Loading unloaded module list
+.............
+For analysis of this file, run !analyze -v
+6: kd> cdb: Reading initial command 'u nt!ObfReferenceObjectWithTag L60; qd'
+nt!ObfReferenceObjectWithTag:
+fffff806`9a2f63d0 48895c2408      mov     qword ptr [rsp+8],rbx
+fffff806`9a2f63d5 4889742410      mov     qword ptr [rsp+10h],rsi
+fffff806`9a2f63da 57              push    rdi
+fffff806`9a2f63db 4883ec30        sub     rsp,30h
+fffff806`9a2f63df 488bf1          mov     rsi,rcx
+fffff806`9a2f63e2 448bc2          mov     r8d,edx
+fffff806`9a2f63e5 bb01000000      mov     ebx,1
+fffff806`9a2f63ea 4883c1d0        add     rcx,0FFFFFFFFFFFFFFD0h
+fffff806`9a2f63ee 8bd3            mov     edx,ebx
+fffff806`9a2f63f0 e84b000000      call    nt!ObpTraceObjectReferenceIfActive (fffff806`9a2f6440)
+fffff806`9a2f63f5 f0480fc15ed0    lock xadd qword ptr [rsi-30h],rbx
+fffff806`9a2f63fb 48ffc3          inc     rbx
+fffff806`9a2f63fe 4883fb01        cmp     rbx,1
+fffff806`9a2f6402 7e14            jle     nt!ObfReferenceObjectWithTag+0x48 (fffff806`9a2f6418)
+fffff806`9a2f6404 488b742448      mov     rsi,qword ptr [rsp+48h]
+fffff806`9a2f6409 488bc3          mov     rax,rbx
+fffff806`9a2f640c 488b5c2440      mov     rbx,qword ptr [rsp+40h]
+fffff806`9a2f6411 4883c430        add     rsp,30h
+fffff806`9a2f6415 5f              pop     rdi
+fffff806`9a2f6416 c3              ret
+fffff806`9a2f6417 cc              int     3
+fffff806`9a2f6418 33d2            xor     edx,edx
+fffff806`9a2f641a 48895c2420      mov     qword ptr [rsp+20h],rbx
+fffff806`9a2f641f 41b910000000    mov     r9d,10h
+fffff806`9a2f6425 4c8bc6          mov     r8,rsi
+fffff806`9a2f6428 8d4a18          lea     ecx,[rdx+18h]
+fffff806`9a2f642b e890882000      call    nt!KeBugCheckEx (fffff806`9a4fecc0)
+fffff806`9a2f6430 cc              int     3
+fffff806`9a2f6431 cc              int     3
+fffff806`9a2f6432 cc              int     3
+fffff806`9a2f6433 cc              int     3
+fffff806`9a2f6434 cc              int     3
+fffff806`9a2f6435 cc              int     3
+fffff806`9a2f6436 cc              int     3
+fffff806`9a2f6437 cc              int     3
+fffff806`9a2f6438 cc              int     3
+fffff806`9a2f6439 cc              int     3
+fffff806`9a2f643a cc              int     3
+fffff806`9a2f643b cc              int     3
+fffff806`9a2f643c cc              int     3
+fffff806`9a2f643d cc              int     3
+fffff806`9a2f643e cc              int     3
+fffff806`9a2f643f cc              int     3
+nt!ObpTraceObjectReferenceIfActive:
+fffff806`9a2f6440 4883ec28        sub     rsp,28h
+fffff806`9a2f6444 833dc5fbcc0000  cmp     dword ptr [nt!ObpTraceFlags (fffff806`9afc6010)],0
+fffff806`9a2f644b 740d            je      nt!ObpTraceObjectReferenceIfActive+0x1a (fffff806`9a2f645a)
+fffff806`9a2f644d 458bc8          mov     r9d,r8d
+fffff806`9a2f6450 448bc2          mov     r8d,edx
+fffff806`9a2f6453 b201            mov     dl,1
+fffff806`9a2f6455 e84a020000      call    nt!ObpPushStackInfo (fffff806`9a2f66a4)
+fffff806`9a2f645a 4883c428        add     rsp,28h
+fffff806`9a2f645e c3              ret
+fffff806`9a2f645f cc              int     3
+fffff806`9a2f6460 cc              int     3
+fffff806`9a2f6461 cc              int     3
+fffff806`9a2f6462 cc              int     3
+fffff806`9a2f6463 cc              int     3
+fffff806`9a2f6464 cc              int     3
+fffff806`9a2f6465 cc              int     3
+fffff806`9a2f6466 cc              int     3
+fffff806`9a2f6467 cc              int     3
+fffff806`9a2f6468 cc              int     3
+fffff806`9a2f6469 cc              int     3
+fffff806`9a2f646a cc              int     3
+fffff806`9a2f646b cc              int     3
+fffff806`9a2f646c cc              int     3
+fffff806`9a2f646d cc              int     3
+fffff806`9a2f646e cc              int     3
+fffff806`9a2f646f cc              int     3
+nt!IopDropIrp:
+fffff806`9a2f6470 48895c2410      mov     qword ptr [rsp+10h],rbx
+fffff806`9a2f6475 48896c2418      mov     qword ptr [rsp+18h],rbp
+fffff806`9a2f647a 48897c2420      mov     qword ptr [rsp+20h],rdi
+fffff806`9a2f647f 4156            push    r14
+fffff806`9a2f6481 4883ec20        sub     rsp,20h
+fffff806`9a2f6485 8b4110          mov     eax,dword ptr [rcx+10h]
+fffff806`9a2f6488 4c8bf2          mov     r14,rdx
+fffff806`9a2f648b 488be9          mov     rbp,rcx
+fffff806`9a2f648e a820            test    al,20h
+fffff806`9a2f6490 740e            je      nt!IopDropIrp+0x30 (fffff806`9a2f64a0)
+fffff806`9a2f6492 488b4918        mov     rcx,qword ptr [rcx+18h]
+fffff806`9a2f6496 33d2            xor     edx,edx
+fffff806`9a2f6498 e8d3538900      call    nt!ExFreePoolWithTag (fffff806`9ab8b870)
+fffff806`9a2f649d 8b4510          mov     eax,dword ptr [rbp+10h]
+fffff806`9a2f64a0 488b4d08        mov     rcx,qword ptr [rbp+8]
+fffff806`9a2f64a4 488d7d10        lea     rdi,[rbp+10h]
+fffff806`9a2f64a8 4885c9          test    rcx,rcx
+fffff806`9a2f64ab 0f85d1010000    jne     nt!IopDropIrp+0x212 (fffff806`9a2f6682)
+fffff806`9a2f64b1 488b4d50        mov     rcx,qword ptr [rbp+50h]
+fffff806`9a2f64b5 4885c9          test    rcx,rcx
+fffff806`9a2f64b8 0f85a4010000    jne     nt!IopDropIrp+0x1f2 (fffff806`9a2f6662)
+fffff806`9a2f64be 8b4510          mov     eax,dword ptr [rbp+10h]
+fffff806`9a2f64c1 4889742430      mov     qword ptr [rsp+30h],rsi
+fffff806`9a2f64c6 0fbae00d        bt      eax,0Dh
+fffff806`9a2f64ca 0f83de000000    jae     nt!IopDropIrp+0x13e (fffff806`9a2f65ae)
+fffff806`9a2f64d0 498d8eb8000000  lea     rcx,[r14+0B8h]
+fffff806`9a2f64d7 e8547cffff      call    nt!KeAcquireSpinLockRaiseToDpc (fffff806`9a2ee130)
+quit:
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\atlmfc.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\concurrency.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\cpp_rest.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Kernel.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\ObjectiveC.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\stl.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Usb4Kd.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Data.Json.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Geolocation.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Sensors.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Media.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\windows.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\winrt.natvis'
+===== dt nt!_DRIVER_OBJECT
+
+************* Preparing the environment for Debugger Extensions Gallery repositories **************
+   ExtensionRepository : Implicit
+   UseExperimentalFeatureForNugetShare : true
+   AllowNugetExeUpdate : true
+   NonInteractiveNuget : true
+   AllowNugetMSCredentialProviderInstall : true
+   AllowParallelInitializationOfLocalRepositories : true
+   EnableRedirectToChakraJsProvider : false
+
+   -- Configuring repositories
+      ----> Repository : LocalInstalled, Enabled: true
+      ----> Repository : UserExtensions, Enabled: true
+
+>>>>>>>>>>>>> Preparing the environment for Debugger Extensions Gallery repositories completed, duration 0.000 seconds
+
+************* Waiting for Debugger Extensions Gallery to Initialize **************
+
+>>>>>>>>>>>>> Waiting for Debugger Extensions Gallery to Initialize completed, duration 0.015 seconds
+   ----> Repository : UserExtensions, Enabled: true, Packages count: 0
+   ----> Repository : LocalInstalled, Enabled: true, Packages count: 30
+
+Microsoft (R) Windows Debugger Version 10.0.28000.2526 AMD64
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+
+Loading Dump File [C:\WINDOWS\Minidump\112526-9968-01.dmp]
+Mini Kernel Dump File: Only registers and stack trace are available
+
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+WARNING: Empty Dump Data Extension block was ignored
+Symbol search path is: srv*
+Executable search path is: 
+Windows 10 Kernel Version 26100 MP (16 procs) Free x64
+Product: WinNt, suite: TerminalServer SingleUserTS
+Kernel base = 0xfffff806`9a000000 PsLoadedModuleList = 0xfffff806`9aef56a0
+Debug session time: Wed Nov 25 01:05:11.358 2026 (UTC + 3:00)
+System Uptime: 0 days 0:02:33.056
+Loading Kernel Symbols
+...............................................................
+................................................................
+................................................................
+..................Missing image name, possible paged-out or corrupt data.
+.
+Loading User Symbols
+PEB is paged out (Peb.Ldr = 00000093`9a3cc018).  Type ".hh dbgerr001" for details
+Loading unloaded module list
+.............
+For analysis of this file, run !analyze -v
+6: kd> cdb: Reading initial command 'dt nt!_DRIVER_OBJECT; qd'
+   +0x000 Type             : Int2B
+   +0x002 Size             : Int2B
+   +0x008 DeviceObject     : Ptr64 _DEVICE_OBJECT
+   +0x010 Flags            : Uint4B
+   +0x018 DriverStart      : Ptr64 Void
+   +0x020 DriverSize       : Uint4B
+   +0x028 DriverSection    : Ptr64 Void
+   +0x030 DriverExtension  : Ptr64 _DRIVER_EXTENSION
+   +0x038 DriverName       : _UNICODE_STRING
+   +0x048 HardwareDatabase : Ptr64 _UNICODE_STRING
+   +0x050 FastIoDispatch   : Ptr64 _FAST_IO_DISPATCH
+   +0x058 DriverInit       : Ptr64     long 
+   +0x060 DriverStartIo    : Ptr64     void 
+   +0x068 DriverUnload     : Ptr64     void 
+   +0x070 MajorFunction    : [28] Ptr64     long 
+quit:
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\atlmfc.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\concurrency.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\cpp_rest.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Kernel.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\ObjectiveC.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\stl.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Usb4Kd.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Data.Json.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Geolocation.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Devices.Sensors.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\Windows.Media.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\windows.natvis'
+NatVis script unloaded from 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\Visualizers\winrt.natvis'

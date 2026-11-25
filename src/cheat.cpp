@@ -582,15 +582,53 @@ static DWORD WINAPI worker(LPVOID)
     return 0;
 }
 
+/* Teşhis: manuel map RtlCreateUserThread ile çağrılıyor, RDX (reason)
+   güvensiz - ilk çağrıda ne geldiğini ham log'a yaz. */
+static void dmain_note(HMODULE mod, DWORD reason)
+{
+    HANDLE h = CreateFileA("C:\\zula\\cheat.log", FILE_APPEND_DATA,
+                           FILE_SHARE_WRITE | FILE_SHARE_READ, NULL,
+                           OPEN_ALWAYS, 0, NULL);
+    if (h == INVALID_HANDLE_VALUE) return;
+    char b[96];
+    int n = wsprintfA(b, "[DllMain] mod=%p reason=%lu\r\n", (void*)mod, (unsigned long)reason);
+    DWORD w = 0;
+    if (n > 0) WriteFile(h, b, (DWORD)n, &w, NULL);
+    CloseHandle(h);
+}
+
+/* Manuel map: RtlCreateUserThread StartAddress'i tek argumanla cagirir
+   (RCX=Base); RDX'teki reason DLL_PROCESS_ATTACH degildir. CRT'nin
+   varsayilan girişi (_DllMainCRTStartup) DllMain'i yalnizca ATTACH /
+   DETACH'te cagirir, bu yuzden DllMain hic calismiyordu. PE girişi
+   artik kendi entry'miz: reason'u sabitleyip CRT'ye devreder. */
+extern "C" BOOL WINAPI _DllMainCRTStartup(HMODULE, DWORD, LPVOID);
+
+extern "C" BOOL WINAPI zula_entry(void* base)
+{
+    dmain_note((HMODULE)base, 0xDEADu);   // teşhis: entry calisti
+    return _DllMainCRTStartup((HMODULE)base, DLL_PROCESS_ATTACH, NULL);
+}
+
 BOOL APIENTRY DllMain(HMODULE mod, DWORD reason, LPVOID)
 {
-    if (reason == DLL_PROCESS_ATTACH) {
-        DisableThreadLibraryCalls(mod);
-        CreateThread(nullptr, 0, worker, nullptr, 0, nullptr);
-    }
-    else if (reason == DLL_PROCESS_DETACH) {
+    static volatile LONG g_started = 0;
+
+    dmain_note(mod, reason);
+
+    /* Manuel map: RtlCreateUserThread StartAddress'i tek argumanla cagirir
+       (RCX=Base); RDX'deki reason degismez bellekten gelir, DLL_PROCESS_ATTACH
+       olmayabilir. Ilk cagri her ne olursa olsun worker baslatilir;
+       DETACH yalnizca worker zaten baslamissa unload sayilir. */
+    if (reason == DLL_PROCESS_DETACH && InterlockedCompareExchange(&g_started, 0, 0) != 0) {
         g_unload = true;
         Sleep(300);
+        return TRUE;
+    }
+
+    if (InterlockedCompareExchange(&g_started, 1, 0) == 0) {
+        DisableThreadLibraryCalls(mod);
+        CreateThread(nullptr, 0, worker, nullptr, 0, nullptr);
     }
     return TRUE;
 }

@@ -9,7 +9,7 @@ if not exist %OUT% mkdir %OUT%
 rem surucu ayri akista: build_driver.bat -> sign.bat -> load_driver.bat
 echo [1/2] loader
 cl /nologo /std:c++17 /EHsc /O2 /MT /DNDEBUG /I src ^
- src\loader.cpp /Fo:%OUT%\ /Fe:%OUT%\loader.exe /link /SUBSYSTEM:CONSOLE advapi32.lib user32.lib || goto err
+ src\loader.cpp /Fo:%OUT%\ /Fe:%OUT%\loader.exe /link /SUBSYSTEM:CONSOLE advapi32.lib user32.lib ole32.lib shell32.lib || goto err
 
 echo [2/2] dll
 cl /nologo /std:c++17 /EHsc /O2 /MT /LD /DNDEBUG ^
@@ -18,7 +18,7 @@ cl /nologo /std:c++17 /EHsc /O2 /MT /LD /DNDEBUG ^
  deps\imgui\imgui_widgets.cpp deps\imgui\backends\imgui_impl_win32.cpp ^
  deps\imgui\backends\imgui_impl_dx11.cpp deps\minhook\src\hook.c deps\minhook\src\trampoline.c ^
  deps\minhook\src\buffer.c deps\minhook\src\hde\hde64.c ^
- /Fo:%OUT%\ /Fe:%OUT%\cheat.dll /link /DLL /SUBSYSTEM:WINDOWS d3d11.lib dxgi.lib ^
+ /Fo:%OUT%\ /Fe:%OUT%\cheat.dll /link /DLL /ENTRY:zula_entry /SUBSYSTEM:WINDOWS d3d11.lib dxgi.lib ^
  user32.lib gdi32.lib imm32.lib shell32.lib dwmapi.lib advapi32.lib || goto err
 
 echo [OK] build\zuladrv.sys build\loader.exe build\cheat.dll
